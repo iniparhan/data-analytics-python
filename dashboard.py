@@ -10,10 +10,10 @@ st.title('Proyek Akhir Dicoding')
 st.header('Bike Sharing Dashboard')
 
 # Membaca dataset day.csv dan hour.csv
-day_df = pd.read_csv('https://github.com/iniparhan/data-analytics-python/blob/main/day_clean.csv')
+day_df = pd.read_csv('day_clean.csv')
 day_df['dteday'] = pd.to_datetime(day_df['dteday'])  # Correct conversion to datetime
 
-hour_df = pd.read_csv('https://github.com/iniparhan/data-analytics-python/blob/main/hour_clean.csv')
+hour_df = pd.read_csv('hour_clean.csv')
 hour_df['dteday'] = pd.to_datetime(hour_df['dteday'])  # Correct conversion to datetime
 
 # Filter numeric columns untuk correlation
