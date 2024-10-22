@@ -157,27 +157,3 @@ plt.figure(figsize=(8, 6))
 sns.barplot(x=season_rentals_workingday.index, y=season_rentals_workingday.values)
 plt.title('Hubungan Musim dan Jumlah Penyewa pada Hari Kerja')
 st.pyplot(plt.gcf())
-
-# RFM Analysis
-st.header('RFM Analysis')
-day_df['last_rental'] = pd.to_datetime(day_df['dteday'])
-day_df['recency'] = (day_df['last_rental'].max() - day_df['last_rental']).dt.days
-
-frequency_df = day_df.groupby('registered')['cnt'].sum().reset_index()
-frequency_df = frequency_df.rename(columns={'cnt': 'frequency'})
-
-monetary_df = day_df.groupby('registered')['cnt'].sum().reset_index()
-monetary_df = monetary_df.rename(columns={'cnt': 'monetary'})
-
-rfm_df = pd.merge(day_df[['registered', 'recency']], frequency_df, on='registered')
-rfm_df = pd.merge(rfm_df, monetary_df, on='registered')
-
-rfm_df['r_score'] = pd.qcut(rfm_df['recency'], 4, labels=[4, 3, 2, 1])
-rfm_df['f_score'] = pd.qcut(rfm_df['frequency'], 4, labels=[1, 2, 3, 4])
-rfm_df['m_score'] = pd.qcut(rfm_df['monetary'], 4, labels=[1, 2, 3, 4])
-
-rfm_df['rfm_score'] = rfm_df['r_score'].astype(str) + rfm_df['f_score'].astype(str) + rfm_df['m_score'].astype(str)
-
-# Display the RFM analysis table
-st.write("RFM Analysis Table:")
-st.dataframe(rfm_df)
